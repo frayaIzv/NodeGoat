@@ -1,11 +1,18 @@
 name: CI/CD Pipeline
 
-on: [push]
+on: 
+  push:
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write  # Junit
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-  steps:
+    steps:
     - name: Clonar código
       uses: actions/checkout@v4
     - name: Instalar dependencias
@@ -17,6 +24,6 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: success()
-  steps:
+    steps:
     - name: Desplegar en producción
       run: echo "Desplegando la aplicación..."
